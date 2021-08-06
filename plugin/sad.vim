@@ -22,6 +22,12 @@ xnoremap <silent> <Plug>(sad-change-backward) :<C-u>call sad#search_and_replace_
 nnoremap <expr><silent> <Plug>(sad-change-forward) ':<C-u>set opfunc=sad#search_and_replace_forward<CR>"'.v:register.'g@'
 nnoremap <expr><silent> <Plug>(sad-change-backward) ':<C-u>set opfunc=sad#search_and_replace_backward<CR>"'.v:register.'g@'
 
+xnoremap <silent> <Plug>(sad-delete-forward) :<C-u>call sad#search_and_delete_forward(visualmode(), 1)<CR>
+xnoremap <silent> <Plug>(sad-delete-backward) :<C-u>call sad#search_and_delete_backward(visualmode(), 1)<CR>
+
+nnoremap <expr><silent> <Plug>(sad-delete-forward) ':<C-u>set opfunc=sad#search_and_delete_forward<CR>"'.v:register.'g@'
+nnoremap <expr><silent> <Plug>(sad-delete-backward) ':<C-u>set opfunc=sad#search_and_delete_backward<CR>"'.v:register.'g@'
+
 func! s:trymap(mode, lhs, rhs) abort
     if maparg(a:lhs, a:mode) ==# ''
         exec a:mode.'map <unique> '.a:lhs.' '.a:rhs
@@ -43,6 +49,9 @@ endif
 
 nmap <expr> <Plug>(sad-change-forward-linewise) '0"'.v:register.'<Plug>(sad-change-forward)'.v:count1.'g_'
 nmap <expr> <Plug>(sad-change-backward-linewise) '0"'.v:register.'<Plug>(sad-change-backward)'.v:count1.'g_'
+
+nmap <expr> <Plug>(sad-delete-forward-linewise) '0"'.v:register.'<Plug>(sad-delete-forward)'.v:count1.'g_'
+nmap <expr> <Plug>(sad-delete-backward-linewise) '0"'.v:register.'<Plug>(sad-delete-backward)'.v:count1.'g_'
 
 command! -bang Sad call sad#be_happy(<bang>0)
 

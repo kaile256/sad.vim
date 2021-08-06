@@ -45,6 +45,24 @@ func! sad#search_and_replace_backward(...) abort
     call call('s:search_and_replace', ['N'] + a:000)
 endfunc
 
+func! s:search_and_delete(dir, ...) abort
+    if a:0 > 0 && a:1 is# "\<C-v>"
+        return feedkeys('gv"'.v:register.'d', 'n')
+    endif
+
+    let l:search = call('sad#search', a:000)
+    exe 'let @'.v:register.' = "'.escape(l:search, '"').'"'
+    call feedkeys('"'.v:register.'dg'.a:dir, 'n')
+endfunc
+
+func! sad#search_and_delete_forward(...) abort
+    call call('s:search_and_delete', ['n'] + a:000)
+endfunc
+
+func! sad#search_and_delete_backward(...) abort
+    call call('s:search_and_delete', ['N'] + a:000)
+endfunc
+
 func! sad#be_happy(bang) abort
     if a:bang
         echom 'Be happy now.'
